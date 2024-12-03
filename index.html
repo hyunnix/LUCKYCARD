@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('digital background.png');
+            background-repeat: no-repeat; /* Prevents tiling */
+            background-position: center; /* Centers the image */
+            background-size: cover;
+            overflow: hidden; /* Prevent scrolling due to particle animation */
+        }
+
+        .particle-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Keep it behind the content */
+            pointer-events: none; /* Prevent interaction with particles */
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: rgb(0, 0, 0);
+            border-radius: 50%;
+            animation: move 10s linear infinite, fade 5s ease-in-out infinite;
+        }
+
+        /* Randomize positions */
+        .particle:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { top: 50%; left: 30%; animation-delay: 1s; }
+        .particle:nth-child(3) { top: 80%; left: 20%; animation-delay: 2s; }
+        .particle:nth-child(4) { top: 10%; left: 60%; animation-delay: 3s; }
+        .particle:nth-child(5) { top: 70%; left: 50%; animation-delay: 4s; }
+        .particle:nth-child(6) { top: 40%; left: 80%; animation-delay: 5s; }
+        .particle:nth-child(7) { top: 30%; left: 90%; animation-delay: 6s; }
+        .particle:nth-child(8) { top: 60%; left: 40%; animation-delay: 7s; }
+        .particle:nth-child(9) { top: 15%; left: 70%; animation-delay: 8s; }
+        .particle:nth-child(10) { top: 85%; left: 30%; animation-delay: 9s; }
+
+        @keyframes move {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+            50% {
+                transform: translateY(-200px) translateX(100px);
+            }
+            100% {
+                transform: translateY(0) translateX(0);
+            }
+        }
+
+        @keyframes fade {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        .dome-container {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            perspective: 1500px;
+        }
+
+        .dome {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            animation: rotateDome 25s infinite linear;
+            transition: animation 0.3s ease-in-out;
+        }
+
+        @keyframes rotateDome {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .card {
+            position: absolute;
+            width: 80px;
+            height: 120px;
+            transform-style: preserve-3d;
+            transform-origin: 50% 50%;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            color: rgb(0, 0, 0);
+            font-weight: bold;
+        }
+
+        .card-front {
+            background-color: #ffffff;
+        }
+
+        .card-back {
+            background-color: #ffffff;
+            transform: rotateY(180deg);
+        }
+
+        .card1 {
+            transform: rotate(36deg) translateY(-270px);
+        }
+
+        .card2 {
+            transform: rotate(72deg) translateY(-270px);
+        }
+
+        .card3 {
+            transform: rotate(108deg) translateY(-270px);
+        }
+
+        .card4 {
+            transform: rotate(144deg) translateY(-270px);
+        }
+
+        .card5 {
+            transform: rotate(180deg) translateY(-270px);
+        }
+
+        .card6 {
+            transform: rotate(216deg) translateY(-270px);
+        }
+
+        .card7 {
+            transform: rotate(252deg) translateY(-270px);
+        }
+
+        .card8 {
+            transform: rotate(288deg) translateY(-270px);
+        }
+
+        .card9 {
+            transform: rotate(324deg) translateY(-270px);
+        }
+
+        .card10 {
+            transform: rotate(360deg) translateY(-270px);
+        }
+
+        .card:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .dome-container:hover .dome {
+            animation-play-state: paused;
+        }
+
+        .text {
+            align-items: center;
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            color: #ffffff;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-weight: 600;
+            z-index: 25;
+        }
+
+        .date {
+            position: absolute;
+            top: -120px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 18px;
+            color: #000000;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-weight: 600;
+            z-index: 30;
+        }
+
+        .show {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 38;
+            width: 312px;
+            height: 468px;
+            display: none;
+        }
+
+        .show img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: relative;
+        }
+
+        .show span {
+            position: absolute;
+            top: 0;
+            right: 20px;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="particle-container">
+        <!-- Create 10 particle divs -->
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="dome-container">
+        <div class="dome">
+            <div class="card card1">
+                <div class="card-inner">
+                    <div class="card-front"><img src="cardback.png" alt="card" style="width:80px;height:120px;"></div>
+                    <div class="card-back"><img src="flip cards-01.png" alt="Back 1" style="width:80px;height:120px;"></div>
+                </div>
+            </div>
+            <div class="card card2">
+                <div class="card-inner">
+                    <div class="card-front"><img src="cardback.png" alt="card" style="width:80px;height:120px;"></div>
+                    <div class="card-back"><img src="flip cards-02.png" alt="Back 2" style="width:80px;height:120px;"></div>
+                </div>
+            </div>
+            <div class="card card3">
+                <div class="card-inner">
+                    <div class="card-front"><img src="cardback.png" alt="card" style="width:80px;height:120px;"></div>
+                    <div class="card-back"><img src="flip cards-03.png" alt="Back 3" style="width:80px;height:120px;"></div>
+                </div>
+            </div>
+            <div class="card card4">
+                <div class="card-inner">
+                    <div class="card-front"><img src="cardback.png" alt="card" style="width:80px;height:120px;"></div>
+                    <div class="card-back"><img src="flip cards-04.png" alt="Back 4" style="width:80px;height:120px;"></div>
+                </div>
+            </div>
+            <div class="card card5">
+                <div class="card-inner">
+                    <div class="card-front"><img src="cardback.png" alt="card" style="width:80px;height:120px;"></div>
+                    <div class="card-back"><img src="flip cards-05.png" alt="Back 5" style="width:80px;height:120px;"></div>
+                </div>
+            </div>
+            <div class="card card6">
+                <div class="card-inner">
+                    <div class="card-front"><img src="cardback.png" alt="card" style="width:80px;height:120px;"></div>
+                    <div class="card-back"><img src="flip cards-06.png" alt="Back 6" style="width:80px;height:120px;"></div>
+                </div>
+            </div>
+            <div class="card card7">
+                <div class="card-inner">
+                    <div class="card-front"><img src="cardback.png" alt="card" style="width:80px;height:120px;"></div>
+                    <div class="card-back"><img src="flip cards-07.png" alt="Back 7" style="width:80px;height:120px;"></div>
+                </div>
+            </div>
+            <div class="card card8">
+                <div class="card-inner">
+                    <div class="card-front"><img src="cardback.png" alt="card" style="width:80px;height:120px;"></div>
+                    <div class="card-back"><img src="flip cards-08.png" alt="Back 8" style="width:80px;height:120px;"></div>
+                </div>
+            </div>
+            <div class="card card9">
+                <div class="card-inner">
+                    <div class="card-front"><img src="cardback.png" alt="card" style="width:80px;height:120px;"></div>
+                    <div class="card-back"><img src="flip cards-09.png" alt="Back 9" style="width:80px;height:120px;"></div>
+                </div>
+            </div>
+            <div class="card card10">
+                <div class="card-inner">
+                    <div class="card-front"><img src="cardback.png" alt="card" style="width:80px;height:120px;"></div>
+                    <div class="card-back"><img src="flip cards-10.png" alt="Back 10" style="width:80px;height:120px;"></div>
+                </div>
+            </div>
+        </div>
+        <a href="card1.html">
+            <div class="text">TAKE IT<br>&nbspFLIP IT</div>
+        </a>
+        <div class="date" id="current-date"></div>
+        <div class="show">
+            <a href="card1.html">
+            <img src="" alt="">
+            <span>x</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function updateDate() {
+            const dateElement = document.getElementById('current-date');
+            const now = new Date();
+            const options = {
+                timeZone: 'America/New_York',
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            };
+            const dateString = now.toLocaleDateString('en-US', options);
+            dateElement.textContent = dateString;
+        }
+
+        function getCurrentDate() {
+            const now = new Date();
+            return now.toISOString().split('T')[0]; 
+        }
+
+        function checkDateAndResetCards() {
+            const storedDate = localStorage.getItem('lastCheckedDate');
+            const currentDate = getCurrentDate();
+
+            if (storedDate !== currentDate) {
+                localStorage.removeItem('flippedCards');
+                localStorage.setItem('lastCheckedDate', currentDate); 
+            }
+        }
+
+        checkDateAndResetCards();
+
+        const flippedCards = JSON.parse(localStorage.getItem('flippedCards')) || {};
+        const show = document.querySelector('.show')
+       
+        document.querySelectorAll('.card').forEach((card, index) => {
+            const cardId = `card${index + 1}`;
+       
+            if (flippedCards[cardId]) {
+                card.querySelector('.card-inner').style.transform = 'rotateY(180deg)';
+                card.style.pointerEvents = 'none'; 
+            }
+
+            if (Object.keys(flippedCards).length > 0) {
+                card.style.pointerEvents = 'none'; 
+            }
+
+            card.addEventListener('click', function () {
+                const cardInner = card.querySelector('.card-inner');
+                if (cardInner.style.transform === 'rotateY(180deg)') {
+                    return; 
+                }
+
+                cardInner.style.transform = 'rotateY(180deg)';
+                show.style.display = 'block';
+                
+                flippedCards[cardId] = true;
+                localStorage.setItem('flippedCards', JSON.stringify(flippedCards));
+
+           
+                document.querySelectorAll('.card').forEach(c => {
+                    c.style.pointerEvents = 'none'; 
+                });
+            });
+        });
+
+        const span = document.querySelector('.show span');
+        span.addEventListener('click', function () {
+            show.style.display = 'none';
+        });
+
+        const dome = document.querySelector('.dome');
+        const img = document.querySelector('.show img')
+        dome.addEventListener('click',function(e) {
+            if(e.target.tagName === 'IMG'){
+                img.src = e.target.src;
+                show.style.display = 'block';
+            }
+        })
+        updateDate();
+        setInterval(updateDate, 60000); 
+    </script>
+</body>
+
+</html>
